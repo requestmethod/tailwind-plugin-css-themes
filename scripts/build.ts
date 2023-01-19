@@ -5,11 +5,6 @@ await emptyDir("./dist");
 await build({
   entryPoints: ["./src/index.ts"],
   mappings: {
-    "https://esm.sh/tailwindcss@3.2.4/plugin": {
-      name: "tailwindcss",
-      version: "3.2.4",
-      subPath: "plugin",
-    },
     "https://esm.sh/tailwindcss@3.2.4/types/config.d.ts": {
       name: "tailwindcss",
       version: "3.2.4",

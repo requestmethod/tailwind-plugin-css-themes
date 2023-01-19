@@ -1,0 +1,8 @@
+{
+  "lint": {
+    "files": {
+      "include": ["src/"],
+      "exclude": ["dist/"]
+    }
+  }
+}

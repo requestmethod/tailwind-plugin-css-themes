@@ -1,15 +1,33 @@
-- name: Get tag version
-  if: startsWith(github.ref, 'refs/tags/')
-  id: get_tag_version
-  run: echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
-- uses: actions/setup-node@v2
-  with:
-    node-version: "18.x"
-    registry-url: "https://registry.npmjs.org"
-- name: npm build
-  run: deno run -A ./scripts/build.ts ${{steps.get_tag_version.outputs.TAG_VERSION}}
-- name: npm publish
-  if: startsWith(github.ref, 'refs/tags/')
-  env:
-    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-  run: cd npm && npm publish
+name: Build project and publish to npm
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get tag version
+        if: startsWith(github.ref, 'refs/tags/')
+        id: get_tag_version
+        run: echo ::set-output name=TAG_VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: npm build
+        run: deno run -A ./scripts/build.ts ${{steps.get_tag_version.outputs.TAG_VERSION}}
+
+      - name: npm publish
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd npm && npm publish

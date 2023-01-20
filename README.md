@@ -21,7 +21,7 @@ npm install -D tailwind-plugin-css-themes
 ```js
 // tailwind.config.js
 
-plugins: [require("tailwind-plugin-css-themes").default()];
+plugins: [require("tailwind-plugin-css-themes").default({})];
 ```
 
 The plugin ships with light and dark themes by default. Once added to your config, you can start using it in your HTML.

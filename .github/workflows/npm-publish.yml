@@ -3,6 +3,8 @@ name: Build project and publish to npm
 on:
   push:
     branches: [main]
+    tags:        
+      - '*' 
 
 jobs:
   build:

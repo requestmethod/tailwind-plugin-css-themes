@@ -1,7 +1,3 @@
-■ ■ ■ □
-
----
-
 # tailwind-plugin-css-themes
 
 A Tailwind CSS plugin to create themes using CSS classes and variables.
@@ -125,6 +121,10 @@ We also convert the color values to RGB to ensure that Tailwind's text opacity m
 
 This package is written in TypeScript and uses [dnt](https://github.com/denoland/dnt) (Deno to Node Transform) to build the package for NPM.
 
+### Install deno
+
+See the [official deno installation guide](https://deno.land/manual@v1.29.4/getting_started/installation).
+
 ### Build package locally in TypeScript, ESM, CJS
 
 ```shell
@@ -132,3 +132,5 @@ deno run -A scripts/build.ts
 ```
 
 ---
+
+■ ■ ■ □

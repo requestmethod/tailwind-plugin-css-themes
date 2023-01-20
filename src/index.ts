@@ -1,5 +1,7 @@
 import plugin from "https://esm.sh/tailwindcss@3.2.4/plugin";
-import { ThemeConfig } from "https://esm.sh/tailwindcss@3.2.4/types/config.d.ts";
+
+import * as defaults from "./defaults.ts";
+import { ThemesConfig } from "./types.ts";
 
 import {
   getTailwindCssVariables,
@@ -7,26 +9,33 @@ import {
   getRgbThemeConfig,
 } from "./utils.ts";
 
+interface PluginOptions {
+  prefix?: string;
+  themes?: (colors?: any) => ThemesConfig;
+}
+
 export default plugin.withOptions(
-  ({
-      prefix,
-      themes,
-    }: {
-      prefix?: string;
-      themes: (
-        colors?: Partial<ThemeConfig["colors"]>
-      ) => Record<string | number | symbol, never>;
-    }) =>
+  (options: PluginOptions) =>
     ({ addComponents, theme }) => {
       const colors = theme("colors");
-      const rgbThemeConfig = getRgbThemeConfig(themes(colors), prefix);
+
+      const rgbThemeConfig = getRgbThemeConfig(
+        options.themes ? options.themes(colors) : defaults.themes(colors),
+        options.prefix || defaults.prefix
+      );
 
       addComponents({
         ...rgbThemeConfig,
       });
     },
   ({ themes }) => {
-    const tokens = getThemeTokens(themes());
+    let tokens: string[];
+
+    if (themes) {
+      tokens = getThemeTokens(themes());
+    } else {
+      tokens = getThemeTokens(defaults.themes());
+    }
 
     const cssVariables = getTailwindCssVariables(tokens);
 

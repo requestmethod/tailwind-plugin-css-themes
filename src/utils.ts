@@ -1,6 +1,7 @@
 import { ThemeConfig } from "https://esm.sh/tailwindcss@3.2.4/types/config.d.ts";
 
 import hexToRgb from "./hex-rgb.ts";
+import { ThemesConfig } from "./types.ts";
 
 export function getThemeTokens(themes?: Partial<ThemeConfig["colors"]>) {
   const tokens: string[] = [];
@@ -13,12 +14,10 @@ export function getThemeTokens(themes?: Partial<ThemeConfig["colors"]>) {
     }
   }
 
-  console.log(Array.from(new Set(tokens.flat())));
-
   return Array.from(new Set(tokens.flat()));
 }
 
-export function getTailwindCssVariables(tokens) {
+export function getTailwindCssVariables(tokens: string[]) {
   return tokens.reduce((acc, token) => {
     return {
       ...acc,
@@ -27,20 +26,26 @@ export function getTailwindCssVariables(tokens) {
   }, {});
 }
 
-export function getRgbThemeConfig(config, prefix) {
-  let rgbThemeConfig = {};
+export function getRgbThemeConfig(
+  config: ThemesConfig,
+  prefix: string
+): ThemesConfig {
+  const classString = `.`;
+  const rgbThemeConfig: ThemesConfig = {};
 
   // Loop through user themes to apply theme prefix and convert hex to rgb
   for (const [userThemeName, userThemeValues] of Object.entries(config)) {
-    let updatedThemeConfig = [];
+    const updatedThemeConfig: string[][] = [];
 
     // Loop through each value of theme to convert hex to rgb
     for (const [token, hex] of Object.entries(userThemeValues)) {
-      updatedThemeConfig.push([`--${token}`, hexToRgb(hex)]);
+      if (hex) {
+        updatedThemeConfig.push([`--${token}`, hexToRgb(hex)]);
+      }
     }
 
     const updatedTheme = {
-      [`.${prefix.concat(userThemeName)}`]: Object.fromEntries(
+      [classString.concat(prefix, userThemeName)]: Object.fromEntries(
         new Map(updatedThemeConfig)
       ),
     };

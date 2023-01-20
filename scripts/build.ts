@@ -25,7 +25,6 @@ await build({
       url: "https://github.com/requestmethod/tailwind-plugin-css-themes/issues",
     },
   },
-  packageManager: "pnpm",
   shims: {
     deno: true,
   },

@@ -14,8 +14,8 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 <div class="bg-gray-900 dark:bg-gray-100 p-12">
   <h3>Card w/ light theme</h3>
   <p class="text-white dark:text-black">
-    This card example is styled using Tailwind color values that were set up for
-    you when you installed the plugin.
+    This card example is styled using Tailwind's default color values with dark
+    utility classes to modify the colors for dark mode.
   </p>
 </div>
 ```

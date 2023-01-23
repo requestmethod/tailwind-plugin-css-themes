@@ -11,7 +11,7 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 ```html
 <!-- Card example w/ Tailwind CSS dark mode -->
 
-<div class="bg-gray-900 dark:bg-gray p-12">
+<div class="bg-gray-900 dark:bg-gray-100 p-12">
   <h3>Card w/ light theme</h3>
   <p class="text-white dark:text-black">
     This card example is styled using Tailwind color values that were set up for
@@ -46,7 +46,7 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 </div>
 ```
 
-This system significantly reduces CSS styling by avoiding dark classes altogether in favor of the theme classes. If you design your app using semantic color names, you can theming for free.
+This system avoids dark classes altogether in favor of the theme classes. If you design your app using semantic color names, you get theming for free. This results in a significant reduction in CSS styling because you're not writing color values directly into components.
 
 # Usage
 

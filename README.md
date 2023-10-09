@@ -21,7 +21,7 @@ Tailwind offers a "[dark mode](https://tailwindcss.com/docs/dark-mode)" feature,
 </div>
 ```
 
-In the "dark mode" approach, every color classes needs a `dark:` alternative color, resulting in twice the number of classes across your entire code base.
+In the "dark mode" approach, every color class needs a `dark:` color class, resulting in twice the number of classes across your entire code base.
 
 ### Tailwind CSS theming with this plugin
 
@@ -96,20 +96,27 @@ npm install -D tailwind-plugin-css-themes
 ```js
 // tailwind.config.js
 
-plugins: [require("tailwind-plugin-css-themes").default({})];
+// commonjs
+plugins: [require("tailwind-plugin-css-themes")({})];
+
+// esm
+import tailwindPluginCssThemes from "tailwind-plugin-css-themes";
+
+plugins: [tailwindPluginCssThemes({})];
 ```
 
 The plugin ships with a very basic light and dark theme by default. Once you add the plugin to your config, you can start using it in your HTML.
 
 ```html
-<!-- Card example w/ light theme -->
+<!-- Card example w/ dark theme -->
 
-<div class="theme--light bg-background-primary">
-  <h3>Card w/ light theme</h3>
-  <p class="text-content-primary">
+<div class="theme--dark bg-background-primary p-12">
+  <h3 class="text-content-primary">Card w/ light theme</h3>
+  <p class="text-content-secondary">
     This card example is styled using Tailwind color values that were set up for
     you when you installed the plugin.
   </p>
+  <button class="text-action">Action text</button>
 </div>
 ```
 
@@ -121,7 +128,7 @@ Themes are created similar to how you would [add colors to your Tailwind config]
 // tailwind.config.js
 
 plugins: [
-  require("tailwind-plugin-css-themes").default({
+  tailwindPluginCssThemes({
     themes: (colors) => {
       return {
         light: {
@@ -170,7 +177,7 @@ We also convert the color values to RGB to ensure that Tailwind's text opacity m
 ```html
 <!-- Using color tokens with opacity -->
 
-<div class="theme--dark bg-background-primary p-12">
+<div class="theme--dark bg-background-primary/80 p-12">
   <p class="text-content-primary/60">
     This text would be displayed in the text-content-primary color at 60%
     opacity.

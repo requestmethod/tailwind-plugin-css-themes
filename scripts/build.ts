@@ -4,13 +4,6 @@ await emptyDir("./dist");
 
 await build({
   entryPoints: ["./src/index.ts"],
-  mappings: {
-    "https://esm.sh/tailwindcss@3.2.4/types/config.d.ts": {
-      name: "tailwindcss",
-      version: "3.2.4",
-      subPath: "types/config.d.ts",
-    },
-  },
   outDir: "./dist",
   package: {
     name: "tailwind-plugin-css-themes",
@@ -29,9 +22,8 @@ await build({
     deno: true,
   },
   typeCheck: false,
+  postBuild() {
+    Deno.copyFileSync("LICENSE", "dist/LICENSE");
+    Deno.copyFileSync("README.md", "dist/README.md");
+  },
 });
-
-// post build steps
-Deno.copyFileSync("LICENSE", "dist/LICENSE");
-
-Deno.copyFileSync("README.md", "dist/README.md");

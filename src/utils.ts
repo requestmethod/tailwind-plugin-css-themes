@@ -1,9 +1,9 @@
-import { ThemeConfig } from "https://esm.sh/tailwindcss@3.2.4/types/config.d.ts";
+import { Config as ThemeConfig } from "npm:tailwindcss@3.3.3";
 
 import hexToRgb from "./hex-rgb.ts";
 import { ThemesConfig } from "./types.ts";
 
-export function getThemeTokens(themes?: Partial<ThemeConfig["colors"]>) {
+export function getThemeTokens(themes): string[] {
   const tokens: string[] = [];
 
   if (themes) {

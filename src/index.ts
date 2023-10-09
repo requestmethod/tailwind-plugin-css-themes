@@ -1,4 +1,4 @@
-import plugin from "https://esm.sh/tailwindcss@3.2.4/plugin";
+import plugin from "npm:tailwindcss@3.3.3/plugin";
 
 import * as defaults from "./defaults.ts";
 import { ThemesConfig } from "./types.ts";

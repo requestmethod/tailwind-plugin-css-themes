@@ -4,7 +4,7 @@ A Tailwind CSS plugin to create themes using CSS classes and variables.
 
 # Overview
 
-Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](https://tailwindcss.com/docs/dark-mode)" feature. This is a utility for specifying dark mode styles, not creating themes. This plugin aims to simplify adding themes with semantic color names that can be updated by passing in theme CSS classes to override styles.
+Tailwind offers a "[dark mode](https://tailwindcss.com/docs/dark-mode)" feature, but that's not a true design system theme. CSS variable theming simplifies color management and developer experience by mapping semantic color names to existing design system color scales. Changing a theme becomes as simple as changing one CSS classes.
 
 ### Tailwind CSS "theming" with Dark Mode
 
@@ -12,13 +12,16 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 <!-- Card example w/ Tailwind CSS dark mode -->
 
 <div class="bg-gray-900 dark:bg-gray-100 p-12">
-  <h3>Card w/ light theme</h3>
-  <p class="text-white dark:text-black">
+  <h3 class="text-white dark:text-black">Card w/ light theme</h3>
+  <p class="text-white/70 dark:text-black/70">
     This card example is styled using Tailwind's default color values with dark
     utility classes to modify the colors for dark mode.
   </p>
+  <button class="text-blue-600 dark:text-blue-400">Action text</button>
 </div>
 ```
+
+In the "dark mode" approach, every color classes needs a `dark:` alternative color, resulting in twice the number of classes across your entire code base.
 
 ### Tailwind CSS theming with this plugin
 
@@ -26,11 +29,12 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 <!-- Card example w/ light theme -->
 
 <div class="theme--light bg-background-primary p-12">
-  <h3>Card w/ light theme</h3>
-  <p class="text-white">
+  <h3 class="text-content-primary">Card w/ light theme</h3>
+  <p class="text-content-secondary">
     This card example is styled using Tailwind color values that were set up for
     you when you installed the plugin.
   </p>
+  <button class="text-action">Action text</button>
 </div>
 ```
 
@@ -38,15 +42,40 @@ Tailwind CSS doesn't support themes by default, but they offer a "[dark mode](ht
 <!-- Card example w/ dark theme -->
 
 <div class="theme--dark bg-background-primary p-12">
-  <h3>Card w/ light theme</h3>
-  <p class="text-white">
+  <h3 class="text-content-primary">Card w/ light theme</h3>
+  <p class="text-content-secondary">
     This card example is styled using Tailwind color values that were set up for
     you when you installed the plugin.
   </p>
+  <button class="text-action">Action text</button>
 </div>
 ```
 
-This system avoids dark classes altogether in favor of the theme classes. If you design your app using semantic color names, you get theming for free. This results in a significant reduction in CSS styling because you're not writing color values directly into components.
+In the theme approach, we avoid `dark:` classes altogether in favor of the semantic theme class names with a single theme class to define the color mapping. The 2 components above share the same HTML, but the theme class name on the parent div sets the right theme values for all of the nested semantic class names.
+
+Here's the same example in React TypeScript:
+
+```tsx
+function Card({ theme }: { theme: "theme--light" | "theme--dark" }) {
+  return (
+    <div className={`${themeClass} p-12 bg-background-primary`}>
+      <h3 className="text-content-primary">Card w/ {theme} theme</h3>
+      <p className="text-content-secondary">
+        This card example is styled using Tailwind color values that were set up
+        for you when you installed the plugin.
+      </p>
+      <button className="text-action">Action text</button>
+    </div>
+  );
+}
+
+<!-- Card example w/ light theme -->
+<Card theme="theme--light" />
+
+<!-- Card example w/ dark theme -->
+<Card theme="theme--dark" />
+
+```
 
 # Usage
 
